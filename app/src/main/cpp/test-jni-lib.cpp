@@ -14,7 +14,7 @@ extern "C"
 
 JNICALL jobject Java_echo_textndk_NativeItfs_testArgs(
         JNIEnv *env,
-        jobject thiz, 
+        jclass thiz, 
         jint a, 
         jbyteArray bytes, 
         jstring nameStr, 
@@ -38,7 +38,7 @@ JNICALL jobject Java_echo_textndk_NativeItfs_testArgs(
     // 获得签名方式：javap -s xxx.class
     // 注意签名除了java类要带分号，别的基本类型，数组都不带分号
    	cls_poi = env->FindClass("echo/textndk/Poi");
-   	fld_name = env->GetFieldID( cls_poi, "name", "Ljava.lang.String;");
+   	fld_name = env->GetFieldID( cls_poi, "name", "Ljava/lang/String;");
     fld_age = env->GetFieldID( cls_poi, "age", "I");
     fld_is_hot = env->GetFieldID( cls_poi, "isHot", "Z");
     fld_data = env->GetFieldID( cls_poi, "data", "[B");
@@ -61,7 +61,7 @@ JNICALL jobject Java_echo_textndk_NativeItfs_testArgs(
     
     // 4. 获取String
     const char* str;
-    str = env->GetStringUTFChars(nameStr, false);
+    str = env->GetStringUTFChars(nameStr, JNI_FALSE);
     LOGI("name:%s", str);
     env->ReleaseStringUTFChars(nameStr, str);
     
@@ -82,7 +82,7 @@ JNICALL jobject Java_echo_textndk_NativeItfs_testArgs(
         jstring nameObj =  (jstring)env->GetObjectField(obj_poi, fld_name);
         const char* str;
         char buf[20]={0};
-        str = env->GetStringUTFChars(nameObj, false);
+        str = env->GetStringUTFChars(nameObj, JNI_FALSE);
         LOGI("poi.name: %s", str);
         sprintf(buf,"%s%s",str, "_jni");
         env->ReleaseStringUTFChars(nameObj, str);
